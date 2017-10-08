@@ -28,7 +28,6 @@ connection.connect(function(err) {
         console.log("error connecting: " + err.stack);
         return;
     }
-
 console.log("connected as id " + connection.threadId);
 });
 
@@ -52,21 +51,27 @@ connection.query("INSERT INTO newgames (newgame) VALUES (?)", [req.body.newgame]
 });
 });
 
-app.post('/update/:id', function (req,res) {
-    var updateID = parseInt(request.params.id);
-    if (isNaN(updateID)) {
-      //Handle invalid IDs, we only want integers
-      response.send("According to your request, you need to consult the manual reference for your server version as defined in package.json. Please consult this manual and try your request again. ERROR_INVALID_ID");
-    }
-    connection.query("UPDATE `newgames` SET ? WHERE id = " + updateID,
-      {newgame: request.body.newgame},
+app.listen(PORT, function() {
+    console.log("Server listening on: http://localhost: " + PORT);
+});
+
+
+app.post("/update/:id", function (req,res) {
+    console.log("SERVER LINE 60");
+    var updateID = parseInt(req.params.id);
+    // if (isNaN(updateID)) {
+    //   //Handle invalid IDs, we only want integers
+    //   res.send("According to your request, you need to consult the manual reference for your server version as defined in package.json. Please consult this manual and try your request again. ERROR_INVALID_ID");
+    // }
+    connection.query("UPDATE newgames SET ? WHERE id = " + updateID,
+      {newgame: req.body.newgame, played: req.body.played}, 
       (err, results) => {
         if (err) 
           throw err;
   
-        response.redirect('/')
+        res.redirect('/')
       });
-    console.log('UPDATE ID: ' + updateID + ' to say: ' + request.body.newgame);
+    //console.log('UPDATE ID: ' + updateID + ' to say: ' + req.body.newgame);
   });
 
     // app.get("/playedgames", function(req, res) {
@@ -100,8 +105,5 @@ app.post('/update/:id', function (req,res) {
 //   });
 
 
-app.listen(PORT, function() {
-    console.log("Server listening on: http://localhost: " + PORT);
-});
 
 

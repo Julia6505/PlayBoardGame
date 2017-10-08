@@ -1,39 +1,40 @@
-<div class="alert alert-info text-center"role="alert">
+<div class="alert text-center"role="alert">
  <h1>Play the Game!!</h1>
+ <img src="https://lh5.ggpht.com/jzvb5ul4Z88bv0aqq8ZjKGECFiKdL0p4j3QZJ8rfGt8YFaiblHxYLV7F5OiLjBiXl8Y=w300-rw" alt="game icon">
 </div>
-<div id=container>
+<div id="container">
     <div class="row">
-        <div class="col been-played">
-        <h2>Been Played</h2>
+        <div class="col been-played text-center">
+        <h4>Been Played</h4>
         {{#each newgames}}
             {{#if this.played}}
-            {{this.newgame}}
+            <p>{{this.newgame}}</p>
             {{/if}}
             {{/each}}
         </div>
-        <div class="col-5">
+        <div class="col-5 text-center">
                 <form action="/" method="POST" id="enter-game">
                     <div class="form-group">
-                    <label for="enter-game"><h3>Game Name:</h3></label>
+                    <label for="enter-game"><h2>Game Name:</h2></label>
                     <input type="text" class="form-control"  name="newgame" aria-describedby="emailHelp">
                     <button type="submit" class="btn btn-dark mx-auto" style="width: 200px;" id="submit">Submit</button>
                 </form>
                 </div>
         </div>
-    <div class="col">
-            <div>Play this game!</div>
+    <div class="col text-center">
+            <div><h4>Play this game!</h4></div>
             {{#each newgames}}
                 {{#unless this.played}}
                 <div class="has-played" name={{this.newgame}}>
                     <p>{{this.newgame}}</p>
                     <form action="/update/{{this.id}}" method="POST">
-                    <input type="hidden" name="played" value="false">
+                    <input type="hidden" name="played" value=1>
+                    <input type="hidden" name="newgame" value={{this.newgame}}>
                     <button type="submit" class="btn btn-info played">Played It!</button>
                     </form>
                 </div>
                   {{/unless}}
             {{/each}}
-          
     </div>
 </div>
 </div>
