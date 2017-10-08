@@ -1,0 +1,64 @@
+<div class="alert alert-info text-center"role="alert">
+ <h1>Play the Game!!</h1>
+</div>
+<div id=container>
+    <div class="row">
+        <div class="col been-played">
+        {{!-- {{#each beenPlayed}}
+        <p>{{this.name}}</p>
+          {{/each}} --}}
+        </div>
+        <div class="col-5">
+                <form action="/newgames" method="POST" id="enter-game">
+                    <div class="form-group">
+                    <label for="enter-game"><h3>Game Name:</h3></label>
+                    <input type="text" class="form-control"  name="new" aria-describedby="emailHelp">
+                    <button type="submit" class="btn btn-dark mx-auto" style="width: 200px;" id="submit">Submit</button>
+                </form>
+                </div>
+        </div>
+    <div class="col">
+            <div>Play this game!</div>
+            {{#each newgames}}
+                <div class="has-played" name={{this.newgame}}>
+                    <p>{{this.newgame}}</p>
+                    <button type="submit" class="btn btn-info played">Played It!</button>
+                </div>
+            {{/each}}
+    </div>
+</div>
+</div>
+<script>
+$("#submit").on("click", function(event) {
+    event.preventDefault();
+    var addGame = {
+    newgame: $("#enter-game [name=new]").val().trim()
+    };
+    $.ajax("/", {
+      type: "POST",
+      data: addGame
+    }).then(
+    function() {
+        console.log("created new plan");
+        location.reload();
+      }
+    );
+  });
+
+$(".played").on('click', function (event){
+	event.preventDefault();
+    console.log($(this).parent());
+    $(this).parent().hide();
+    var playedTheGame = { playedgame: $(this).parent().attr("name")};
+    console.log(playedTheGame, "MEEHHH");
+     $.ajax("/playedgames", {
+      type: "POST",
+      data: playedTheGame
+    }).then(
+    //function() {
+    //location.reload();}
+   );
+  });
+
+</script>
+
