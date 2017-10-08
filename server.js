@@ -71,16 +71,16 @@ app.post("/newgames", function(req, res) {
     });
   });
 
-  app.post("/playedgames", function(req, res) {
-    connection.query("INSERT INTO playedgames (playedgame) VALUES (?)", [req.body.playedgame], function(err, result) {
-      if (err) {
-        return res.status(500).end();
-      }
-      // Send back the ID of the new todo
-      res.render({ playedgames: playedgame});
-    //   console.log({ id: result.insertId });
-    });
-  });
+//   app.post("/playedgames", function(req, res) {
+//     connection.query("INSERT INTO playedgames (playedgame) VALUES (?)", [req.body.playedgame], function(err, result) {
+//       if (err) {
+//         return res.status(500).end();
+//       }
+//       // Send back the ID of the new todo
+//       res.render({ playedgames: playedgame});
+//     //   console.log({ id: result.insertId });
+//     });
+//   });
 
 
 app.listen(PORT, function() {
