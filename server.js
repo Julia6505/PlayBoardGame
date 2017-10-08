@@ -43,7 +43,7 @@ app.get("/", function (req, res) {
 });
 
 app.post("/", function (req, res){
-    console.log("You sent" + req.body.newgame);
+    console.log("You sent " + req.body.newgame);
 connection.query("INSERT INTO newgames (newgame) VALUES (?)", [req.body.newgame], function(err, result) {
     if (err) {
         throw err;
@@ -52,24 +52,41 @@ connection.query("INSERT INTO newgames (newgame) VALUES (?)", [req.body.newgame]
 });
 });
 
-    app.get("/playedgames", function(req, res) {
-        connection.query("SELECT * FROM playedgames;", function(err, data) {
-          if (err) {
-        return res.status(500).end();
-          }
-        });
-    });
-
-app.post("/newgames", function(req, res) {
-    connection.query("INSERT INTO newgames (newgame) VALUES (?)", [req.body.newgame], function(err, result) {
-      if (err) {
-        return res.status(500).end();
-      }
-      // Send back the ID of the new todo
-      res.json({ id: result.insertId });
-    //   console.log({ id: result.insertId });
-    });
+app.post('/update/:id', function (req,res) {
+    var updateID = parseInt(request.params.id);
+    if (isNaN(updateID)) {
+      //Handle invalid IDs, we only want integers
+      response.send("According to your request, you need to consult the manual reference for your server version as defined in package.json. Please consult this manual and try your request again. ERROR_INVALID_ID");
+    }
+    connection.query("UPDATE `newgames` SET ? WHERE id = " + updateID,
+      {newgame: request.body.newgame},
+      (err, results) => {
+        if (err) 
+          throw err;
+  
+        response.redirect('/')
+      });
+    console.log('UPDATE ID: ' + updateID + ' to say: ' + request.body.newgame);
   });
+
+    // app.get("/playedgames", function(req, res) {
+    //     connection.query("SELECT * FROM playedgames;", function(err, data) {
+    //       if (err) {
+    //     return res.status(500).end();
+    //       }
+    //     });
+    // });
+
+// app.post("/newgames", function(req, res) {
+//     connection.query("INSERT INTO newgames (newgame) VALUES (?)", [req.body.newgame], function(err, result) {
+//       if (err) {
+//         return res.status(500).end();
+//       }
+      // Send back the ID of the new todo
+    //   res.json({ id: result.insertId });
+    //   console.log({ id: result.insertId });
+    // });
+//   });
 
 //   app.post("/playedgames", function(req, res) {
 //     connection.query("INSERT INTO playedgames (playedgame) VALUES (?)", [req.body.playedgame], function(err, result) {

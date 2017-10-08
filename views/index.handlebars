@@ -4,15 +4,18 @@
 <div id=container>
     <div class="row">
         <div class="col been-played">
-        {{!-- {{#each beenPlayed}}
-        <p>{{this.name}}</p>
-          {{/each}} --}}
+        <h2>Been Played</h2>
+        {{#each newgames}}
+            {{#if this.played}}
+            {{this.newgame}}
+            {{/if}}
+            {{/each}}
         </div>
         <div class="col-5">
-                <form action="/newgames" method="POST" id="enter-game">
+                <form action="/" method="POST" id="enter-game">
                     <div class="form-group">
                     <label for="enter-game"><h3>Game Name:</h3></label>
-                    <input type="text" class="form-control"  name="new" aria-describedby="emailHelp">
+                    <input type="text" class="form-control"  name="newgame" aria-describedby="emailHelp">
                     <button type="submit" class="btn btn-dark mx-auto" style="width: 200px;" id="submit">Submit</button>
                 </form>
                 </div>
@@ -20,45 +23,54 @@
     <div class="col">
             <div>Play this game!</div>
             {{#each newgames}}
+                {{#unless this.played}}
                 <div class="has-played" name={{this.newgame}}>
                     <p>{{this.newgame}}</p>
+                    <form action="/update/{{this.id}}" method="POST">
+                    <input type="hidden" name="played" value="false">
                     <button type="submit" class="btn btn-info played">Played It!</button>
+                    </form>
                 </div>
+                  {{/unless}}
             {{/each}}
+          
     </div>
 </div>
 </div>
 <script>
-$("#submit").on("click", function(event) {
-    event.preventDefault();
-    var addGame = {
-    newgame: $("#enter-game [name=new]").val().trim()
-    };
-    $.ajax("/", {
-      type: "POST",
-      data: addGame
-    }).then(
-    function() {
-        console.log("created new plan");
-        location.reload();
-      }
-    );
-  });
+//$("#submit").on("click", function(event) {
+  //  event.preventDefault();
+    //var addGame = {
+    //newgame: $("#enter-game [name=new]").val().trim()
+    //};
+   // $.ajax("/", {
+     // type: "POST",
+      //data: addGame
+    //}).then(
+    //function() {
+      //  console.log("created new plan");
+       // location.reload();
+      //}
+    //);
+ // });
 
-$(".played").on('click', function (event){
-	event.preventDefault();
-    console.log($(this).parent());
-    $(this).parent().hide();
-    var playedTheGame = { playedgame: $(this).parent().attr("name")};
-    console.log(playedTheGame, "MEEHHH");
-     $.ajax("/playedgames", {
-      type: "POST",
-      data: playedTheGame
-    }).then(
+//$(".played").on('click', function (event){
+//event.preventDefault();
+    //console.log($(this).parent());
+    //$(this).parent().hide();
+  //  var playedTheGame = {
+      //  playedgame: $(".has-played [name={{this.newgame}}]").val()
+   // };
+        //playedgame: $(this).parent().attr("name")};
+    //console.log(playedTheGame, "MEEHHH");
+     //$.ajax("/playedgames", {
+      //type: "POST",
+      //data: playedTheGame
+    //}).then(
     //function() {
     //location.reload();}
-   );
-  });
+   //);
+  //});
 
 </script>
 
