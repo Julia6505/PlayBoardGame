@@ -59,19 +59,13 @@ app.listen(PORT, function() {
 app.post("/update/:id", function (req,res) {
     console.log("SERVER LINE 60");
     var updateID = parseInt(req.params.id);
-    // if (isNaN(updateID)) {
-    //   //Handle invalid IDs, we only want integers
-    //   res.send("According to your request, you need to consult the manual reference for your server version as defined in package.json. Please consult this manual and try your request again. ERROR_INVALID_ID");
-    // }
     connection.query("UPDATE newgames SET ? WHERE id = " + updateID,
       {newgame: req.body.newgame, played: req.body.played}, 
-      (err, results) => {
+      function(err, results) {
         if (err) 
           throw err;
-  
         res.redirect('/')
       });
-    //console.log('UPDATE ID: ' + updateID + ' to say: ' + req.body.newgame);
   });
 
     // app.get("/playedgames", function(req, res) {
@@ -82,27 +76,7 @@ app.post("/update/:id", function (req,res) {
     //     });
     // });
 
-// app.post("/newgames", function(req, res) {
-//     connection.query("INSERT INTO newgames (newgame) VALUES (?)", [req.body.newgame], function(err, result) {
-//       if (err) {
-//         return res.status(500).end();
-//       }
-      // Send back the ID of the new todo
-    //   res.json({ id: result.insertId });
-    //   console.log({ id: result.insertId });
-    // });
-//   });
 
-//   app.post("/playedgames", function(req, res) {
-//     connection.query("INSERT INTO playedgames (playedgame) VALUES (?)", [req.body.playedgame], function(err, result) {
-//       if (err) {
-//         return res.status(500).end();
-//       }
-//       // Send back the ID of the new todo
-//       res.render({ playedgames: playedgame});
-//     //   console.log({ id: result.insertId });
-//     });
-//   });
 
 
 

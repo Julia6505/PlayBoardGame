@@ -5,40 +5,40 @@
 <div id="container">
     <div class="row">
         <div class="col been-played text-center">
-        <h4>Been Played</h4>
-        {{#each newgames}}
+            <h4>Been Played</h4>
+            {{#each newgames}}
             {{#if this.played}}
-            <p>{{this.newgame}}</p>
+                <p>{{this.newgame}}</p>
             {{/if}}
             {{/each}}
         </div>
-        <div class="col-5 text-center">
-                <form action="/" method="POST" id="enter-game">
-                    <div class="form-group">
-                    <label for="enter-game"><h2>Game Name:</h2></label>
-                    <input type="text" class="form-control"  name="newgame" aria-describedby="emailHelp">
-                    <button type="submit" class="btn btn-dark mx-auto" style="width: 200px;" id="submit">Submit</button>
-                </form>
-                </div>
+    <div class="col-5 text-center">
+        <form action="/" method="POST" id="enter-game">
+            <div class="form-group">
+                <label for="enter-game"><h2>Game Name:</h2></label>
+                <input type="text" class="form-control"  name="newgame" aria-describedby="emailHelp">
+                <button type="submit" class="btn btn-dark mx-auto" style="width: 200px;" id="submit">Submit</button>
+        </form>
         </div>
+    </div>
     <div class="col text-center">
-            <div><h4>Play this game!</h4></div>
+        <div><h4>Play this game!</h4></div>
             {{#each newgames}}
-                {{#unless this.played}}
+            {{#unless this.played}}
                 <div class="has-played" name={{this.newgame}}>
                     <p>{{this.newgame}}</p>
                     <form action="/update/{{this.id}}" method="POST">
-                    <input type="hidden" name="played" value=1>
-                    <input type="hidden" name="newgame" value={{this.newgame}}>
-                    <button type="submit" class="btn btn-info played">Played It!</button>
+                        <input type="hidden" name="played" value=1>
+                        <input type="hidden" name="newgame" value={{this.newgame}}>
+                        <button type="submit" class="btn btn-success played">Played It!</button>
                     </form>
                 </div>
-                  {{/unless}}
+            {{/unless}}
             {{/each}}
     </div>
 </div>
-</div>
 <script>
+
 //$("#submit").on("click", function(event) {
   //  event.preventDefault();
     //var addGame = {
