@@ -1,11 +1,11 @@
 <div class="alert text-center"role="alert">
  <h1>Play the Game!!</h1>
- <img src="https://lh5.ggpht.com/jzvb5ul4Z88bv0aqq8ZjKGECFiKdL0p4j3QZJ8rfGt8YFaiblHxYLV7F5OiLjBiXl8Y=w300-rw" alt="game icon">
+ <img src="https://lh5.ggpht.com/jzvb5ul4Z88bv0aqq8ZjKGECFiKdL0p4j3QZJ8rfGt8YFaiblHxYLV7F5OiLjBiXl8Y=w300-rw" alt="game icon" height="100" width="100">
 </div>
 <div id="container">
     <div class="row">
         <div class="col been-played text-center">
-            <h4>Been Played</h4>
+            <h4>I played it!</h4>
             {{#each newgames}}
             {{#if this.played}}
                 <p>{{this.newgame}}</p>
@@ -15,8 +15,9 @@
     <div class="col-5 text-center">
         <form action="/" method="POST" id="enter-game">
             <div class="form-group">
-                <label for="enter-game"><h2>Game Name:</h2></label>
+                <label for="enter-game"><h4>Game Name:</h4></label>
                 <input type="text" class="form-control"  name="newgame" aria-describedby="emailHelp">
+                <br>
                 <button type="submit" class="btn btn-dark mx-auto" style="width: 200px;" id="submit">Submit</button>
         </form>
         </div>

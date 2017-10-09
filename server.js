@@ -1,5 +1,6 @@
 var express = require("express");
 var bodyParser = require("body-parser");
+var path = require("path");
 
 var app = express();
 
@@ -31,6 +32,8 @@ connection.connect(function(err) {
 console.log("connected as id " + connection.threadId);
 });
 
+app.use(express.static(__dirname + '/public/assets'));
+
 app.get("/", function (req, res) {
     connection.query("SELECT * FROM newgames;", function(err, data) {
     if (err) {
@@ -51,11 +54,6 @@ connection.query("INSERT INTO newgames (newgame) VALUES (?)", [req.body.newgame]
 });
 });
 
-app.listen(PORT, function() {
-    console.log("Server listening on: http://localhost: " + PORT);
-});
-
-
 app.post("/update/:id", function (req,res) {
     console.log("SERVER LINE 60");
     var updateID = parseInt(req.params.id);
@@ -67,6 +65,10 @@ app.post("/update/:id", function (req,res) {
         res.redirect('/')
       });
   });
+
+  app.listen(PORT, function() {
+    console.log("Server listening on: http://localhost: " + PORT);
+});
 
     // app.get("/playedgames", function(req, res) {
     //     connection.query("SELECT * FROM playedgames;", function(err, data) {
