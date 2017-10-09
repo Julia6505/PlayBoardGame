@@ -4,8 +4,8 @@ var path = require("path");
 
 var app = express();
 
-// var PORT = process.env.PORT || 8080;
-var PORT = 8080;
+var PORT = process.env.PORT || 8080;
+// var PORT = 8080;
 
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
@@ -20,10 +20,26 @@ var mySQL = require("mysql");
 // require("./routes/apiRoutes")(app);
 
 //connection to mySQL 
-var connection = mySQL.createConnection({
-    user: "root",
-    database: "games_db"
-});
+// var connection = mySQL.createConnection({
+//     user: "root",
+//     database: "games_db"
+// });
+
+var connection;
+if(process.env.JAWSDB_URL) {
+  //Heroku deployment
+    connection = mySQL.createConnection(process.env.JAWSDB_URL);
+} else {
+  //local host
+    connection = mySQL.createConnection({
+        root: 3000,
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "games_db",
+    });
+};
+
 connection.connect(function(err) {
     if (err) {
         console.log("error connecting: " + err.stack);
